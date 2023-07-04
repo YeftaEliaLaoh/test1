@@ -1,0 +1,59 @@
+server:
+  port: 8383
+  error:
+    include-message: always
+
+logging:
+  level:
+    root: INFO
+    org:
+      hibernate:
+        type: DEBUG
+
+app:
+  jwt:
+    secret: "YourSecretKeyHere"
+  rabbitmq:
+    queue: "ExampleQueue"
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: "example-svc"
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    platform: "postgres"
+    url: "jdbc:postgresql://localhost:5432/example?stringtype=unspecified"
+    username: "postgres"
+    password: "postgres"
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+    generate-ddl: true
+    show-sql: "true"
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: GMT+7
+  rabbitmq:
+    host: "localhost"
+    port: "5672"
+    virtual-host: /
+    username: "guest"
+    password: "guest"
+    listener:
+      simple:
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          initial-interval: 1s
+          max-attempts: 3
+          max-interval: 5s
+          multiplayer: 2
+        prefetch: 1
+  flyway:
+    schemas: "public"
+    baseline-on-migrate: true
