@@ -5,7 +5,6 @@ import org.example.dto.AuthResponse;
 import org.example.dto.LoginRequest;
 import org.example.dto.RegisterRequest;
 import org.example.entity.User;
-import org.example.jpa.UserRepository;
 import org.example.service.UserService;
 import org.example.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,10 +38,7 @@ public class UsersController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request) {
-
-
         userService.saveUser(request);
-
         return ResponseEntity.ok().body(User.builder()
                 .name(request.getName())
                 .email(request.getEmail()).build());

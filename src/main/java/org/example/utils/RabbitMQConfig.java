@@ -30,24 +30,26 @@ public class RabbitMQConfig {
     }
 
     @Bean
-	ConnectionFactory connectionFactory() {
-		CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("localhost");
-		cachingConnectionFactory.setUsername(username);
-		cachingConnectionFactory.setUsername(password);
-		return cachingConnectionFactory;
-	}
-	@Bean
-	MessageListener messageListener() {
-		return new Subscriber();
-	}
-	@Bean
-	MessageListenerContainer messageListenerContainer() {
-		SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
-		simpleMessageListenerContainer.setConnectionFactory(connectionFactory());
-		simpleMessageListenerContainer.setQueues(queue());
-		simpleMessageListenerContainer.setMessageListener(messageListener());
-		return simpleMessageListenerContainer;
+    ConnectionFactory connectionFactory() {
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("localhost");
+        cachingConnectionFactory.setUsername(username);
+        cachingConnectionFactory.setUsername(password);
+        return cachingConnectionFactory;
+    }
 
-	}
+    @Bean
+    MessageListener messageListener() {
+        return new Subscriber();
+    }
+
+    @Bean
+    MessageListenerContainer messageListenerContainer() {
+        SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
+        simpleMessageListenerContainer.setConnectionFactory(connectionFactory());
+        simpleMessageListenerContainer.setQueues(queue());
+        simpleMessageListenerContainer.setMessageListener(messageListener());
+        return simpleMessageListenerContainer;
+
+    }
 
 }

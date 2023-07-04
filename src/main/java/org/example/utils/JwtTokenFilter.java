@@ -28,20 +28,20 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         //if (!request.getRequestURI().equalsIgnoreCase("/api/register")) {
-            if (!hasAuthorizationBearer(request)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+        if (!hasAuthorizationBearer(request)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-            String token = getAccessToken(request);
+        String token = getAccessToken(request);
 
-            if (!jwtUtil.validateAccessToken(token)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+        if (!jwtUtil.validateAccessToken(token)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-            setAuthenticationContext(token, request);
-    //    }
+        setAuthenticationContext(token, request);
+        //    }
         filterChain.doFilter(request, response);
     }
 
